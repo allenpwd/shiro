@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author pwd
+ * @author pwd allen
  * @create 2019-03-30 12:56
  **/
 public class MyShiroRealm extends AuthorizingRealm {
@@ -93,7 +93,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo(roles);
         info.setStringPermissions(permissions);
 
-        //4. 返回 SimpleAuthorizationInfo 对象.
+        //4. 返回 SimpleAuthorizationInfo 对象。
         return info;
     }
 
