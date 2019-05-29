@@ -89,7 +89,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         } else if ("user".equals(principal)) {
         }
 
-        //3. 创建 SimpleAuthorizationInfo, 并设置其 reles 属性.
+        //3. 创建 SimpleAuthorizationInfo, 并设置其 roles 属性.
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo(roles);
         info.setStringPermissions(permissions);
 
