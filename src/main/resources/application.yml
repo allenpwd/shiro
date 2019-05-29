@@ -1,0 +1,8 @@
+
+shiro:
+  loginUrl: /login
+  successUrl: /success
+  unauthorizedUrl: /unauthorized
+spring:
+  thymeleaf:
+    cache: false
