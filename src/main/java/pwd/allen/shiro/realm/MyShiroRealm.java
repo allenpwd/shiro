@@ -72,7 +72,11 @@ public class MyShiroRealm extends AuthorizingRealm {
         System.out.println(result);
     }
 
-    //授权会被 shiro 回调的方法
+    /**
+     * 授权会被 shiro 回调的方法
+     * @param principals
+     * @return
+     */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(
             PrincipalCollection principals) {
