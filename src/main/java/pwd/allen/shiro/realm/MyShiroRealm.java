@@ -48,7 +48,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         //2). credentials: 密码.
         Object credentials = null; //"fc1709d0a95a6be30bc5926fdb7f22f4";
         if("admin".equals(username)){
-            credentials = "038bdaf98f2037b31f1e75b5b4c9b26e";
+            credentials = "098d2c478e9c11555ce2823231e02ec1";
         }else if("user".equals(username)){
             credentials = "098d2c478e9c11555ce2823231e02ec1";
         }
@@ -63,16 +63,12 @@ public class MyShiroRealm extends AuthorizingRealm {
         return info;
     }
 
-    public static void main(String[] args) {
-        Object credentials = "123456";
-        Object salt = ByteSource.Util.bytes("user");
-        int hashIterations = 1024;
 
-        Object result = new SimpleHash(Md5Hash.ALGORITHM_NAME, credentials, salt, hashIterations);
-        System.out.println(result);
-    }
-
-    //授权会被 shiro 回调的方法
+    /**
+     * 授权会被 shiro 回调的方法
+     * @param principals
+     * @return
+     */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(
             PrincipalCollection principals) {
@@ -95,6 +91,15 @@ public class MyShiroRealm extends AuthorizingRealm {
 
         //4. 返回 SimpleAuthorizationInfo 对象。
         return info;
+    }
+
+    public static void main(String[] args) {
+        Object credentials = "123456";
+        Object salt = ByteSource.Util.bytes("user");
+        int hashIterations = 1024;
+
+        Object result = new SimpleHash(Md5Hash.ALGORITHM_NAME, credentials, salt, hashIterations);
+        System.out.println(result);
     }
 
 }
