@@ -17,6 +17,15 @@ import java.util.Set;
  * @create 2019-03-30 12:56
  **/
 public class MyShiroRealm extends AuthorizingRealm {
+
+    /**
+     * 只需根据用户名去查密码并返回
+     * 校验逻辑位置：org.apache.shiro.realm.AuthenticatingRealm#assertCredentialsMatch
+     *
+     * @param token
+     * @return
+     * @throws AuthenticationException
+     */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(
             AuthenticationToken token) throws AuthenticationException {
@@ -47,9 +56,9 @@ public class MyShiroRealm extends AuthorizingRealm {
         Object principal = username;
         //2). credentials: 密码.
         Object credentials = null; //"fc1709d0a95a6be30bc5926fdb7f22f4";
-        if("admin".equals(username)){
+        if ("admin".equals(username)) {
             credentials = "098d2c478e9c11555ce2823231e02ec1";
-        }else if("user".equals(username)){
+        } else if ("user".equals(username)) {
             credentials = "098d2c478e9c11555ce2823231e02ec1";
         }
 
