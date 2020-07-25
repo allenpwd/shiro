@@ -55,9 +55,9 @@ public class MyShiroRealm extends AuthorizingRealm {
         //1). principal: 认证的实体信息. 可以是 username, 也可以是数据表对应的用户的实体类对象.
         Object principal = username;
         //2). credentials: 密码.
-        Object credentials = null; //"fc1709d0a95a6be30bc5926fdb7f22f4";
+        Object credentials = null;
         if ("admin".equals(username)) {
-            credentials = "098d2c478e9c11555ce2823231e02ec1";
+            credentials = "038bdaf98f2037b31f1e75b5b4c9b26e";
         } else if ("user".equals(username)) {
             credentials = "098d2c478e9c11555ce2823231e02ec1";
         }
@@ -91,7 +91,10 @@ public class MyShiroRealm extends AuthorizingRealm {
         if ("admin".equals(principal)) {
             roles.add("admin");
             permissions.add("admin");
+            permissions.add("role:*");
         } else if ("user".equals(principal)) {
+            roles.add("role");
+            permissions.add("role:*");
         }
 
         //3. 创建 SimpleAuthorizationInfo, 并设置其 roles 属性.
@@ -102,9 +105,17 @@ public class MyShiroRealm extends AuthorizingRealm {
         return info;
     }
 
+    /**
+     * 根据帐号密码生成散列值
+     * FormAuthenticationFilter默认的散列算法hashIterations为1024
+     *
+     * @param args
+     */
     public static void main(String[] args) {
+        String userName = "user";
         Object credentials = "123456";
-        Object salt = ByteSource.Util.bytes("user");
+
+        Object salt = ByteSource.Util.bytes(userName);
         int hashIterations = 1024;
 
         Object result = new SimpleHash(Md5Hash.ALGORITHM_NAME, credentials, salt, hashIterations);

@@ -7,8 +7,13 @@ import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * @author pwd
@@ -17,20 +22,24 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 public class MyController {
 
-    @GetMapping("/login")
-    public ModelAndView login() {
+    @RequestMapping("/login")
+    public ModelAndView login(HttpServletRequest request, Map map) {
+        if (request.getAttribute("shiroLoginFailure") != null) {
+            System.out.println(request.getAttribute("shiroLoginFailure"));
+            return new ModelAndView("/error");
+        }
         return new ModelAndView("/login");
     }
 
     @GetMapping("/index")
-    public ModelAndView index() {
+    public ModelAndView index(HttpServletRequest request) {
         return new ModelAndView("/index");
     }
 
     @GetMapping("/admin")
     @RequiresRoles("admin")
     @RequiresPermissions("admin:select")
-    public ModelAndView admin() {
+    public ModelAndView admin(HttpServletRequest request) {
         return new ModelAndView("/admin");
     }
 
