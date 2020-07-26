@@ -6,6 +6,12 @@
 </head>
 <body>
 出错了！
-<p th:text="${#httpServletRequest.getAttribute('shiroLoginFailure')}"/>
+<p th:text="${#httpServletRequest.getAttribute('shiroLoginFailure')}">错误信息！</p>
+<!-- BasicErrorController的默认错误处理 -->
+<p th:text="${timestamp}"></p>
+<p th:text="${status}"></p>
+<p th:text="${error}"></p>
+<p th:text="${message}"></p>
+<p th:text="${path}"></p>
 </body>
 </html>

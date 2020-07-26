@@ -88,13 +88,11 @@ public class MyShiroRealm extends AuthorizingRealm {
         Set<String> roles = new HashSet<>();
         Set<String> permissions = new HashSet<>();
         roles.add("user");
+        permissions.add("user:*");
         if ("admin".equals(principal)) {
             roles.add("admin");
             permissions.add("admin");
-            permissions.add("role:*");
         } else if ("user".equals(principal)) {
-            roles.add("role");
-            permissions.add("role:*");
         }
 
         //3. 创建 SimpleAuthorizationInfo, 并设置其 roles 属性.

@@ -1,7 +1,7 @@
 
 shiro:
   loginUrl: /login
-  successUrl: /success
+  successUrl: /index
   unauthorizedUrl: /unauthorized
 spring:
   thymeleaf:
