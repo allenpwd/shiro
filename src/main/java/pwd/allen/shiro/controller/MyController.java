@@ -27,6 +27,7 @@ public class MyController {
     /**
      * get请求返回到登录页面
      * post请求会走 FormAuthenticationFilter 的 登录认证，若出错则会将异常信息放到request.attribute中
+     * @see org.apache.shiro.web.filter.authc.FormAuthenticationFilter#failureKeyAttribute
      * @param request
      * @param map
      * @return

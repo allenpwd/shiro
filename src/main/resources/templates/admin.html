@@ -5,6 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-admin
+@RequiresRoles("admin")
+<br/>
+@RequiresPermissions("admin:select")
 </body>
 </html>

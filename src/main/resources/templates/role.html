@@ -5,6 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-role
+@RequiresPermissions("user:test")
+<br/>
+@RequiresRoles(value = {"user", "admin"}, logical = Logical.OR)
 </body>
 </html>
