@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+@RequiresUser
+<br/>
+当前Subject已经通过login进行身份验证或者通过记住我登录，即Subject.isAuthenticated()==true||Subject.isRemembered()==true
+<br/>
+hello~!<span th:text="${subject.principal}"></span>
+<p>isRemembered：<span th:text="${subject.isRemembered()}"></span></p>
+<p>isAuthenticated：<span th:text="${subject.isAuthenticated()}"></span></p>
+</body>
+</html>

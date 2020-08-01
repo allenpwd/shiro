@@ -8,3 +8,8 @@ Modularrealmauthenticator会调用 AuthenticationStrategy进行多 Realm身份�
 5. Authenticator会把相应的 token传入 Realm,从 Realm获取身份验证信息,如果没有返
 回/抛出异常表示身份验证失败了。此处可以配置多个 Realm,将按照相应的顺序及策略进
 行访问。
+
+
+### 分析
+#### 身份认证后：怎么保证SecurityUtils.getSubject()获取到上次的认证信息
+org.apache.shiro.mgt.DefaultSecurityManager.createSubject(org.apache.shiro.subject.SubjectContext)

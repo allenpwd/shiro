@@ -4,20 +4,20 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.crypto.hash.Md5Hash;
+import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 /**
  * @author pwd allen
  * @create 2019-03-30 12:56
  **/
-public class MyShiroRealm extends AuthorizingRealm {
+public class MyShiroRealmTwo extends AuthorizingRealm {
 
     /**
      * 只需根据用户名去查密码并返回
@@ -58,9 +58,9 @@ public class MyShiroRealm extends AuthorizingRealm {
         //2). credentials: 密码.
         Object credentials = null;
         if ("admin".equals(username)) {
-            credentials = "038bdaf98f2037b31f1e75b5b4c9b26e";
-        } else if ("md5".equals(username)) {
-            credentials = "2924fdef0ccba9b053885e025f5ab2d6";
+            credentials = "6f45623f187aeb90bc06089405d1cde1bc7c82236ca6cd90fc99247bad80c434";
+        } else if ("sha256".equals(username)) {
+            credentials = "feb7196755a856f8031801c1cc8e62ecd0ea3f7371999d8d3c3e9ac69aafa5f3";
         }
 
         //3). realmName: 当前 realm 对象的 name. 调用父类的 getName() 方法即可
@@ -88,13 +88,12 @@ public class MyShiroRealm extends AuthorizingRealm {
         //2. 利用登录的用户的信息来用户当前用户的角色或权限(可能需要查询数据库)
         Set<String> roles = new HashSet<>();
         Set<String> permissions = new HashSet<>();
-
         if ("admin".equals(principal)) {
-            roles.add("*");
+            roles.add("admin");
             permissions.add("*");
-        } else if ("md5".equals(principal)) {
-            roles.add("md5");
-            permissions.add("md5:*");
+        } else if ("sha256".equals(principal)) {
+            roles.add("sha256");
+            permissions.add("sha256:*");
         }
 
         //3. 创建 SimpleAuthorizationInfo, 并设置其 roles 属性.
@@ -106,48 +105,19 @@ public class MyShiroRealm extends AuthorizingRealm {
     }
 
     /**
-     * 重写role的校验规则，使之支持通配符*结尾
-     * @param roleIdentifier
-     * @param info
-     * @return
-     */
-    @Override
-    protected boolean hasRole(String roleIdentifier, AuthorizationInfo info) {
-        if (info == null || info.getRoles() == null) {
-            return false;
-        }
-        Iterator<String> iterator = info.getRoles().iterator();
-        while (iterator.hasNext()) {
-            String role = iterator.next();
-            if (role.endsWith("*")) {
-                if (role.length() == 1) {
-                    return true;
-                }
-                if (roleIdentifier.startsWith(role.substring(0, role.length() - 1))) {
-                    return true;
-                }
-            }
-            if (role.equals(roleIdentifier)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * 根据帐号密码生成散列值
      * FormAuthenticationFilter默认的散列算法hashIterations为1024
      *
      * @param args
      */
     public static void main(String[] args) {
-        String userName = "md5";
+        String userName = "admin";
         Object credentials = "123456";
 
         Object salt = ByteSource.Util.bytes(userName);
-        int hashIterations = 1024;
+        int hashIterations = 100;
 
-        Object result = new SimpleHash(Md5Hash.ALGORITHM_NAME, credentials, salt, hashIterations);
+        Object result = new SimpleHash(Sha256Hash.ALGORITHM_NAME, credentials, salt, hashIterations);
         System.out.println(result);
     }
 
