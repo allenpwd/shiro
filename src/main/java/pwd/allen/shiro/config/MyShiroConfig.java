@@ -12,6 +12,7 @@ import org.apache.shiro.mgt.SessionsSecurityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -52,6 +53,10 @@ public class MyShiroConfig {
 
         // 设置认证策略为所有都匹配才算通过
 //        ModularRealmAuthenticator.class.cast(securityManager.getAuthenticator()).setAuthenticationStrategy(new AllSuccessfulStrategy());
+
+        // 设置 记住我 cookie超时时间为1小时
+        CookieRememberMeManager.class.cast(securityManager.getRememberMeManager()).getCookie().setMaxAge(3600);
+
         return securityManager;
     }
 
