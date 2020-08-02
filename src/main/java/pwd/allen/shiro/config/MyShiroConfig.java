@@ -88,15 +88,17 @@ public class MyShiroConfig {
      *      roles[admin]：表示需要有 admin 角色授权才能访问；
      *      perms["user:create"]：表示需要有“user:create”权限才能访问
      *
+     * 疑问：好像每个请求都得匹配这个拦截链才行，否则好像拿到的Subject是未认证的，这样基于注解的方式会校验有问题
+     *
      * @return
      */
     @Bean
     public ShiroFilterChainDefinition shiroFilterChainDefinition() {
         DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
         chainDefinition.addPathDefinition("/logout", "logout");
-        chainDefinition.addPathDefinition("/index", "anon");
-        chainDefinition.addPathDefinition("/isUser", "user");
-        chainDefinition.addPathDefinition("/**", "authc");
+        // login需要设置成authc，这样才能直接使用FormAuthenticationFilter的登录操作，否则就需要自己去调用Subject.login登录
+        chainDefinition.addPathDefinition("/login", "authc");
+        chainDefinition.addPathDefinition("/**", "user");
         return chainDefinition;
     }
 
