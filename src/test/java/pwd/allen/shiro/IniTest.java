@@ -5,6 +5,7 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.config.IniSecurityManagerFactory;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.Factory;
 import org.junit.Assert;
@@ -29,7 +30,7 @@ public class IniTest {
      * @see org.apache.shiro.authz.permission.WildcardPermissionResolver
      */
     @Test
-    public void ini() {
+    public void ini() throws InterruptedException {
         loadIni("classpath:ini.ini");
 
         // 得到Subject
@@ -46,7 +47,7 @@ public class IniTest {
         }
 
         // 用户身份是否已认证
-        System.out.println(subject.isAuthenticated());
+        System.out.println(String.format("subject.isAuthenticated()=%s", subject.isAuthenticated()));
 
         //<editor-fold desc="角色校验">
         System.out.println(subject.hasRole("role1"));
@@ -62,6 +63,16 @@ public class IniTest {
         System.out.println(subject.isPermitted("pms2:ab*"));
         subject.checkPermission("pms1:test");
         //</editor-fold>
+
+        // 可通过会话 共享内容
+        Session session = subject.getSession();
+        session.setAttribute("name", "test");
+        // 即使在线程中也能获取到共享内容
+        new Thread(() -> {
+            System.out.println(String.format("在线程中获取会话的共享内容:%s", SecurityUtils.getSubject().getSession().getAttribute("name")));
+        }).start();
+
+        Thread.sleep(2000);
 
         // 退出
         subject.logout();

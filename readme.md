@@ -13,3 +13,9 @@ Modularrealmauthenticator会调用 AuthenticationStrategy进行多 Realm身份�
 ### 分析
 #### 身份认证后：怎么保证SecurityUtils.getSubject()获取到上次的认证信息
 org.apache.shiro.mgt.DefaultSecurityManager.createSubject(org.apache.shiro.subject.SubjectContext)
+
+
+### 官网
+https://shiro.apache.org/
+
+

@@ -1,6 +1,7 @@
 package pwd.allen.shiro.realm;
 
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.crypto.hash.Md5Hash;
@@ -20,8 +21,8 @@ import java.util.Set;
 public class MyShiroRealm extends AuthorizingRealm {
 
     /**
-     * 只需根据用户名去查密码并返回
-     * 校验逻辑位置：org.apache.shiro.realm.AuthenticatingRealm#assertCredentialsMatch
+     * 这个方法只需根据用户名去查密码并返回，校验逻辑在{@link org.apache.shiro.realm.AuthorizingRealm#getAuthenticationInfo}中封装好了
+     * 校验认证逻辑被抽出来放在这个位置：{@link org.apache.shiro.realm.AuthenticatingRealm#assertCredentialsMatch}
      *
      * @param token
      * @return
@@ -33,6 +34,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         System.out.println("[FirstRealm] doGetAuthenticationInfo");
 
         //1. 把 AuthenticationToken 转换为 UsernamePasswordToken
+        // 这里强转的类型不一定要是UsernamePasswordToken ，具体要看你在登录接口中所传的对象类型
         UsernamePasswordToken upToken = (UsernamePasswordToken) token;
 
         //2. 从 UsernamePasswordToken 中来获取 username
@@ -141,7 +143,7 @@ public class MyShiroRealm extends AuthorizingRealm {
      * @param args
      */
     public static void main(String[] args) {
-        String userName = "md5";
+        String userName = "admin";
         Object credentials = "123456";
 
         Object salt = ByteSource.Util.bytes(userName);

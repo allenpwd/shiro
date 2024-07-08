@@ -30,6 +30,6 @@ public class MyRealmOne implements Realm {
         if (!"123456".equals(credentials)) {
             throw new IncorrectCredentialsException("密码错误");
         }
-        return new SimpleAuthenticationInfo(credentials, credentials, getName());
+        return new SimpleAuthenticationInfo(principal, credentials, getName());
     }
 }
