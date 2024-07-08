@@ -83,7 +83,7 @@ public class MyShiroConfig {
     /**
      * 配置拦截url的规则，
      *  url：使用ant风格模式，通配符支持?、*、**；匹配顺序是按照在配置中的声明顺序匹配
-     *  拦截器：可以参考org.apache.shiro.web.filter.mgt.DefaultFilter的枚举拦截器
+     *  拦截器：可以参考{@link org.apache.shiro.web.filter.mgt.DefaultFilter}的枚举拦截器
      *      authc：表示需要身份认证通过后才能访问；
      *      roles[admin]：表示需要有 admin 角色授权才能访问；
      *      perms["user:create"]：表示需要有“user:create”权限才能访问
