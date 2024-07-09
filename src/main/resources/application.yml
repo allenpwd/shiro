@@ -1,4 +1,4 @@
-
+# 这几个的注入位置在：org.apache.shiro.spring.web.config.AbstractShiroWebFilterConfiguration
 shiro:
   loginUrl: /login
   successUrl: /index

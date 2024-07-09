@@ -2,11 +2,14 @@
 Shiro 是一个功能强大且易于使用的 Java 安全框架，它提供了身份验证、授权、会话管理、加密、RememberMe等功能。
 #### 组成
 ![框架图](doc/shiro架构图.png)
-- subject：主体，可以是用户也可以是程序，主体要访问系统，系统需要对主体进行认证、授权。
-- securityManager：安全管理器，主体进行认证和授权都 是通过securityManager进行。它包含下面的认证器和授权器。
-- authenticator：认证器，主体进行认证最终通过authenticator进行的。
-- authorizer：授权器，主体进行授权最终通过authorizer进行的。
-- sessionManager：web应用中一般是用web容器对session进行管理，shiro也提供一套session管理的方式。可以实现单点登录。
+- subject：主体，可以是用户也可以是程序，主体要访问系统，系统需要对主体进行认证、授权。认证主体包含两个信息
+  - Principals:身份,即用户名
+  - Credentials:凭证,即密码
+- securityManager： 是 Shiro 的心脏；所有具体的交互都通过 SecurityManager 进行拦截并控制；它管理着所有 Subject、且负责进行认证和授权、及会话、缓存的管理
+- authenticator：认证器，负责主体认证的，即确定用户是否登录成功，我们可以使用　 Shiro 提供的方法来认证，也可以自定义去实现，自己判断什么时候算是用户登录成功
+- authorizer：授权器，即权限授权，给　Subject 分配权限，以此很好的控制用户可访问的资源
+- sessionManager：为了可以在不同的环境下使用　session 功能，shiro 实现了自己的 sessionManager ，可以用在非 web 环境下和分布式环境下使用，\
+web应用中一般是用web容器对session进行管理，shiro也提供一套session管理的方式。可以实现单点登录。
 - SessionDao： 通过SessionDao管理session数据，针对个性化的session数据存储需要使用sessionDao。
 - cache Manager：缓存管理器，主要对session和授权数据进行缓存，比如将授权数据通过cacheManager进行缓存管理，和ehcache整合对缓存数据进行管理。
 - realm：域，领域，相当于数据源，通过realm存取认证、授权相关数据。（它的主要目的是与数据库打交道，查询数据库中的认证的信息（比如用户名和密码），查询授权的信息（比如权限的code等，所以这里可以理解为调用数据库查询一系列的信息，一般情况下在项目中采用自定义的realm，因为不同的业务需求不一样））

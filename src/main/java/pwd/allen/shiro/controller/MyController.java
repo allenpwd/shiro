@@ -38,7 +38,7 @@ public class MyController {
      * @return
      */
     @RequestMapping("/login")
-    @RequiresGuest //通过身份认证或者记住我登录的话，会报错access denied
+//    @RequiresGuest //加上这个注解的话，通过身份认证或者记住我登录的话，会报错access denied
     public ModelAndView login(HttpServletRequest request, Map map) {
         if (request.getAttribute("shiroLoginFailure") != null) {
             System.out.println(request.getAttribute("shiroLoginFailure"));
